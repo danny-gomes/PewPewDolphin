@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\ComportamentoGolfinhoLiberado.cs" />
     <Compile Include="Assets\Scripts\GolfinhoController.cs" />
     <Compile Include="Assets\Scripts\MainMenuButtonScript.cs" />
+    <Compile Include="Assets\Scripts\PauseScreenScript.cs" />
     <Compile Include="Assets\Scripts\SpawnInimigos.cs" />
     <Compile Include="Assets\Scripts\ComportamentoTiro.cs" />
   </ItemGroup>

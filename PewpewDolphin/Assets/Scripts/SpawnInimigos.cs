@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,9 @@ public class SpawnInimigos : MonoBehaviour
     public GameObject golfinhoInimigo;
     public GameObject oAmorDaMinhaVida;
     public float temporizador = 0;
-    public float spawnRate;
-    public float probabilidadeSpawnGolfinhoRosa = 10;
+    public static float spawnRate;
+    public float probabilidadeSpawnGolfinhoRosa = 10; // probabilidade em 200, a 1 probabilidade = 0.5% de um golfinho ser rosa
+    private static bool flagRosa = true;
 
     public float limXsupSpawn = 10f;
     public float limXinfSpawn = -10f;
@@ -32,11 +34,11 @@ public class SpawnInimigos : MonoBehaviour
 
         if (temporizador > spawnRate)
         {
-            float randX = Random.Range(limXinfSpawn, limXsupSpawn);
-            float randY = Random.Range(limYinfSpawn, limYsupSpawn);
-            float randZ = Random.Range(limZinfSpawn, limZsupSpawn);
+            float randX = UnityEngine.Random.Range(limXinfSpawn, limXsupSpawn);
+            float randY = UnityEngine.Random.Range(limYinfSpawn, limYsupSpawn);
+            float randZ = UnityEngine.Random.Range(limZinfSpawn, limZsupSpawn);
 
-            if (Random.Range(0, 2) == 1)
+            if (UnityEngine.Random.Range(0, 2) == 1)
             {
                 GameObject nave = Instantiate(naveInimiga, new Vector3(randX, randY, randZ), Quaternion.identity);
                 nave.transform.rotation = Quaternion.Euler(0, -90, 0);
@@ -45,10 +47,13 @@ public class SpawnInimigos : MonoBehaviour
             else
             {
 
-                if(Random.Range(0,100) < probabilidadeSpawnGolfinhoRosa)
+                if (UnityEngine.Random.Range(0, 1000) < probabilidadeSpawnGolfinhoRosa && flagRosa)
                 {
-
-                } else
+                    GameObject golfinho = Instantiate(oAmorDaMinhaVida, new Vector3(randX, randY, randZ), Quaternion.identity);
+                    golfinho.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    flagRosa = false;
+                }
+                else
                 {
                     GameObject golfinho = Instantiate(golfinhoInimigo, new Vector3(randX, randY, randZ), Quaternion.identity);
                     golfinho.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -57,6 +62,17 @@ public class SpawnInimigos : MonoBehaviour
             }
 
             temporizador = 0;
+        }
+
+        if(ComportamentoInimigo.score > 400)
+        {
+            spawnRate = 0.5f;
+        } else if(ComportamentoInimigo.score > 250)
+        {
+            spawnRate = 0.8f;
+        } else if(ComportamentoInimigo.score > 100)
+        {
+            spawnRate = 1.1f;
         }
     }
 }

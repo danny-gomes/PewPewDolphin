@@ -359,6 +359,7 @@
 "Assets/Scripts/GolfinhoController.cs"
 "Assets/Scripts/MainMenu.cs"
 "Assets/Scripts/MainMenuButtonScript.cs"
+"Assets/Scripts/PauseScreenScript.cs"
 "Assets/Scripts/PlanoInimigosPassaram.cs"
 "Assets/Scripts/SpawnInimigos.cs"
 -langversion:9.0

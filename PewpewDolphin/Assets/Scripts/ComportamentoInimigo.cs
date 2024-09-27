@@ -7,6 +7,7 @@ public class ComportamentoInimigo : MonoBehaviour
 {
     static public float velocidadeInimigo = 0.07f;
     public GameObject golfinhoLiberado;
+    public static int score;
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +24,17 @@ public class ComportamentoInimigo : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        if(score < 0)
+        {
+            GolfinhoController.gameOver();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        TextMeshProUGUI scoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
+
         float currentXposition = this.transform.position.x;
         float currentYposition = this.transform.position.y;
         float currentZposition = this.transform.position.z;
@@ -41,8 +49,9 @@ public class ComportamentoInimigo : MonoBehaviour
             Destroy(other.gameObject);
             if (this.gameObject.tag == "golfinhoInimigo")
             {
+                score = score - 8;
+                scoreText.text = "Score: " + score;
                 Destroy(this.gameObject);
-                GolfinhoController.gameOver();
             }
             else if(other.gameObject.tag == "golfinhoRosa")
             {
@@ -51,6 +60,8 @@ public class ComportamentoInimigo : MonoBehaviour
             else
             {
                 Destroy(this.gameObject);
+                score = score + 8;
+                scoreText.text = "Score: " + score;
             }
 
             Destroy(other.gameObject);
@@ -65,6 +76,8 @@ public class ComportamentoInimigo : MonoBehaviour
                 GameObject golfinhoLiberadoCriado = Instantiate(golfinhoLiberado, new Vector3(currentXposition, currentYposition, currentZposition), Quaternion.identity);
                 golfinhoLiberadoCriado.transform.rotation = Quaternion.Euler(0, 180, 0);
                 Destroy(this.gameObject);
+                score = score + 8;  
+                scoreText.text = "Score: " + score;
             } else if(this.gameObject.tag == "golfinhoRosa")
             {
                 GolfinhoController.win();
